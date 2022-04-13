@@ -1,9 +1,9 @@
 const Card = (props) => {
   return (
-    <div class="row">
+    <div class="row" >
       {props.tasks.map((task) => {
         return (
-          <div class="col-sm-6">
+          <div class="col-sm-6" key={task.id}>
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">{task.title}</h5>
