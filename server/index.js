@@ -32,16 +32,29 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (request, response) => {
-
-  let data=request.body.formData
+  let data = request.body.formData;
   mongoClient.connect(url, (err, client) => {
     const db = client.db("TodoTasks");
     db.collection("tasks").insertOne(
-      { title: data.title, body: data.body,date:data.date },
+      { title: data.title, body: data.body, date: data.date },
       (errorOne, result) => {
         console.log(errorOne, result);
         client.close();
         response.status(200).json({ message: "data send " });
+      }
+    );
+  });
+});
+
+app.delete("/id", (request, response) => {
+  mongoClient.connect(url, (err, client) => {
+    const db = client.db("TodoTasks");
+    db.collection("tasks").deleteOne(
+      { _id: request.params.id },
+      (errorOne, result) => {
+        console.log(errorOne, result);
+        client.close();
+        response.status(200).json({ message: "data Deleted " });
       }
     );
   });
