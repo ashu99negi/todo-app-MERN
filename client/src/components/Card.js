@@ -29,19 +29,19 @@ let navigate = useNavigate();
 
 };
   return (
-    <div class="row">
+    <div className="row">
       {props.tasks.map((task) => {
         return (
-          <div class="col-sm-6" key={task._id}>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{task.title}</h5>
-                <span class="badge rounded-pill bg-warning text-dark">
+          <div className="col-sm-6" key={task._id}>
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{task.title}</h5>
+                <span className="badge rounded-pill bg-warning text-dark">
                   {task.date}
                 </span>
-                <p class="card-text">{task.body}</p>
+                <p className="card-text">{task.body}</p>
                 <button
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={()=>clickhandle(task._id)}
                 >
                   Delete Task
