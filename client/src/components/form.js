@@ -47,8 +47,9 @@ const Form = (props) => {
             <input
               type="date"
               min={new Date()}
-              value={date}
+              defaultValue={date}
               onChange={dateChangeHandler}
+              required
             ></input>
           </div>
         </div>
