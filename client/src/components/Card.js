@@ -1,31 +1,51 @@
 import axios from "axios";
-import {
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
+
+import { useState } from "react";
+
+import EditTaskModal from "./EditTaskModal"
+
 
 const Card = (props) => {
-// const clickhandle=(id)=>{
-//   console.log(id)
-// }
+
+  const [showModal, setShowModal] = useState(false)
+  
+   const [show, setShow] = useState(false);
+
+   const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [id, setId] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [taskdate, setTaskDate] = useState("");
+  
+  
+
+  const editHandler = (id, title, body, date) => {
+  setId(id);
+  setTitle(title);
+  setBody(body);
+  setTaskDate(date);
+  setShowModal(true)
+  handleShow();
+
+}
 
 let navigate = useNavigate();
-  const clickhandle =  (id) => {
-    axios({
-      method: "delete",
-      url: "http://localhost:8000/"+ id,
+const clickhandle =  (id) => {
+  axios({
+    method: "delete",
+    url: "http://localhost:8000/"+ id,
 
+  })
+    .then(function (response) {
+        console.log("response==>",response)
+        navigate('/')
+        props.setDataSent(new Date())
+    }).catch((error)=>{
+        console.log("error ===> ",error)
     })
-      .then(function (response) {
-          console.log("response==>",response)
-          navigate('/')
-          props.setDataSent(new Date())
-      }).catch((error)=>{
-          console.log("error ===> ",error)
-      })
 
 };
   return (
@@ -42,12 +62,38 @@ let navigate = useNavigate();
                 <p className="card-text">{task.body}</p>
                 <button
                   className="btn btn-primary"
-                  onClick={()=>clickhandle(task._id)}
+                  onClick={() => clickhandle(task._id)}
                 >
                   Delete Task
                 </button>
+                <br />
+                <br />
+                <button
+                  className="btn btn-primary"
+                  variant="primary"
+                  onClick={() =>
+                    editHandler(task._id, task.title, task.body, task.date)
+                  }
+                >
+                  Edit Task
+                </button>
               </div>
             </div>
+            {showModal && (
+              <EditTaskModal
+                show={show}
+                handleClose={handleClose}
+                id={id}
+                title={title}
+                setTitle={setTitle}
+                body={body}
+                setBody={setBody}
+                currentDate={taskdate}
+                setTaskDate={setTaskDate}
+                setDataSent={props.setDataSent}
+                setShowModal={setShowModal}
+              />
+            )}
           </div>
         );
       })}

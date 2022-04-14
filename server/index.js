@@ -74,7 +74,7 @@ app.put("/:id", (request, response) => {
       " Received Body= " +
       body +
       " Received Date= " +
-      currentDate
+      date
   );
   mongoClient.connect(url, (err, client) => {
     const db = client.db("TodoTasks");
