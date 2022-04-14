@@ -82,7 +82,7 @@ const RootFile = () => {
         {showForm ? addTasks : <button onClick={showNewTask}>Add Tasks</button>}
       </div>
       <div className="expenses">
-        {task?.length &&  <Card  tasks={task}></Card>}
+        {task?.length && <Card tasks={task} setDataSent={setDataSent}></Card>}
       </div>
     </div>
   );
