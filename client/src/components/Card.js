@@ -1,18 +1,33 @@
 import axios from "axios";
+import {
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 const Card = (props) => {
-  const DeleteHandler =  (id) => {
+// const clickhandle=(id)=>{
+//   console.log(id)
+// }
+
+let navigate = useNavigate();
+  const clickhandle =  (id) => {
     axios({
       method: "delete",
-      url: "http://localhost:8000/id",
+      url: "http://localhost:8000/"+ id,
+
     })
       .then(function (response) {
-        console.log("response==>", response);
+          console.log("response==>",response)
+          navigate('/')
+          props.setDataSent(new Date())
+      }).catch((error)=>{
+          console.log("error ===> ",error)
       })
-      .catch((error) => {
-        console.log("error ===> ", error);
-      });
-  };
+
+};
   return (
     <div class="row">
       {props.tasks.map((task) => {
@@ -27,7 +42,7 @@ const Card = (props) => {
                 <p class="card-text">{task.body}</p>
                 <button
                   class="btn btn-primary"
-                  onClick={DeleteHandler(task._id)}
+                  onClick={()=>clickhandle(task._id)}
                 >
                   Delete Task
                 </button>

@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoClient = require("mongodb").MongoClient;
+const mongodb = require("mongodb");
 const url = "mongodb+srv://adarsh:warning@cluster0.6zuqm.mongodb.net/ritik";
 
 const app = express();
@@ -31,12 +32,14 @@ app.get("/", (req, res) => {
   });
 });
 
+
 app.post("/", (request, response) => {
-  let data = request.body.formData;
+
+  let data=request.body.formData
   mongoClient.connect(url, (err, client) => {
     const db = client.db("TodoTasks");
     db.collection("tasks").insertOne(
-      { title: data.title, body: data.body, date: data.date },
+      { title: data.title, body: data.body,date:data.date },
       (errorOne, result) => {
         console.log(errorOne, result);
         client.close();
@@ -45,19 +48,19 @@ app.post("/", (request, response) => {
     );
   });
 });
-
-app.delete("/id", (request, response) => {
+app.delete("/:id", (request, response) => {
+  console.log(request.params.id);
+  // let d=request.params.id
   mongoClient.connect(url, (err, client) => {
     const db = client.db("TodoTasks");
-    db.collection("tasks").deleteOne(
-      { _id: request.params.id },
-      (errorOne, result) => {
-        console.log(errorOne, result);
-        client.close();
-        response.status(200).json({ message: "data Deleted " });
-      }
-    );
+    db.collection("tasks").deleteOne({'_id': new mongodb.ObjectId(request.params.id)})
+    .then((errorOne, result) => {
+      console.log("afadsfasf======",errorOne, result);
+      client.close();
+      response.status(200).json({ message: "data deleted successfully" });
+    })
   });
 });
-
+// db.collectionName.remove( {"_id": ObjectId(request.params.id)})
 app.listen(8000);
+
