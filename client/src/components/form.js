@@ -1,5 +1,6 @@
 import "./form.css";
 import { useState } from "react";
+import moment from "moment";
 
 const Form = (props) => {
   const [title, setTitle] = useState("");
@@ -46,7 +47,7 @@ const Form = (props) => {
             <label>Date</label>
             <input
               type="date"
-              min={new Date()}
+              min={moment(new Date()).format('YYYY-MM-DD')}
               defaultValue={date}
               onChange={dateChangeHandler}
               required
