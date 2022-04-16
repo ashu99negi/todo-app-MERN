@@ -32,12 +32,28 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/completed", (req, res) => {
+  mongoClient.connect(url, (err, client) => {
+    const db = client.db("TodoTasks");
+    const tasks = db
+      .collection("tasks")
+      .find({})
+      .toArray(function (err, result) {
+        if (err) throw err;
+        console.log(result);
+        res.status(200).json({ message: result });
+      });
+    data = tasks;
+    console.log(tasks);
+  });
+});
+
 app.post("/", (request, response) => {
   let data = request.body.formData;
   mongoClient.connect(url, (err, client) => {
     const db = client.db("TodoTasks");
     db.collection("tasks").insertOne(
-      { title: data.title, body: data.body, date: data.date },
+      { title: data.title, body: data.body, date: data.date, status: false },
       (errorOne, result) => {
         console.log(errorOne, result);
         client.close();
@@ -90,4 +106,25 @@ app.put("/:id", (request, response) => {
       });
   });
 });
+
+app.patch("/:id", (request, response) => {
+  const id = request.params.id;
+  const status = request.body.status;
+  console.log("Status", status);
+  mongoClient.connect(url, (err, client) => {
+    const db = client.db("TodoTasks");
+    db.collection("tasks")
+      .updateOne(
+        { _id: new mongodb.ObjectId(id) },
+        { $set: { status: status } }
+      )
+      .then((errorOne, result) => {
+        console.log("Updated ==> ", errorOne, result);
+        client.close();
+        response.status(200).json({ message: "data was updated successfully" });
+      });
+  });
+});
+
+
 app.listen(8000);

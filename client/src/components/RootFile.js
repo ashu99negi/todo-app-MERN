@@ -9,17 +9,8 @@ import {
     useNavigate,
     useLocation,
   } from "react-router-dom";
-
-
-const DUMMY_TASKS = [
-  {
-    id: "m1",
-    title: "Sushi",
-    body: "Finest fish and veggies",
-    date: 22.99,
-  },
-];
-const RootFile = () => {
+  
+const RootFile = (props) => {
     let navigate = useNavigate();
 
   const [task, setTasks] = useState([]);
@@ -76,6 +67,8 @@ const RootFile = () => {
     getAllTasks()
   },[dataSent])
 
+  
+
   return (
     <div className="container ">
       <div className="new-expense">
@@ -84,6 +77,8 @@ const RootFile = () => {
       <div className="expenses">
         {task?.length && <Card tasks={task} setDataSent={setDataSent}></Card>}
       </div>
+      <button type="submit" onClick={()=>{
+        navigate("/completed")}}>Show me something</button>
     </div>
   );
 };
