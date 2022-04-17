@@ -13,25 +13,7 @@ import {
 import { useState } from "react";
 
 const App = () => {
-
   
-  // const [task, setTasks] = useState([]);
-
-  // let navigate = useNavigate()
-  //   const getAllTasks=()=>{
-  //     axios({
-  //       method: "get",
-  //       url: "http://localhost:8000/completed",
-  //     })
-  //       .then(function (response) {
-  //           console.log("response==>",response)
-  //           setTasks(response?.data?.message)
-  //           navigate('/')
-  //       }).catch((error)=>{
-  //           console.log("error ===> ",error)
-  //       }) 
-  //   }
-
   return (
     <div>
       <Routes>

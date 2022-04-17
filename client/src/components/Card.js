@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
-
+import './Card.css';
 import EditTaskModal from "./EditTaskModal";
 import { useEffect } from "react";
 
@@ -21,7 +21,7 @@ const Card = (props) => {
   const [completedTask, setCompletedTask] = useState([]);
 
   const [isClicked, setIsClicked] = useState(false);
-  
+  const[alert, setAlert] = useState(false);
 
   const editHandler = (id, title, body, date) => {
     setId(id);
@@ -60,8 +60,8 @@ const Card = (props) => {
     //   completedTask = [...completedTask, task]
 
     // }
-
-
+    setAlert(true);
+    
     axios({
       method: "patch",
       url: "http://localhost:8000/" + id,
@@ -79,15 +79,27 @@ const Card = (props) => {
         console.log("error ===> ", error);
       });
 
+      
     
   }
 
+  const handleAlertClose = ()=>{
+    setAlert(false);
+  }
 
   // useEffect(()=>{
   //   props.setDataSent(new Date());
   // }, [status])
 
   return (
+    <>
+    {alert && (
+      <div class="alert alert-success close" role="alert" data-dismiss="alert">
+        Yayyy! You've completed your task.
+        <button onClick={handleAlertClose} className="alert-close-button">X</button>
+      </div>
+
+    )}
     <div className="row">
       {props.tasks.map((task) => {
 
@@ -153,67 +165,9 @@ const Card = (props) => {
 
           );
         }
-        // return (
-            // <div className="col-sm-6" key={task._id}>
-            //   <div className="card">
-            //     <div className="card-body">
-            //       <h5 className="card-title">{task.title}</h5>
-            //       <div class="form-check">
-            //         <label class="form-check-label" for="flexCheckDefault">
-            //           Completed
-            //         </label>
-            //         <input
-            //           class="form-check-input"
-            //           type="checkbox"
-            //           defaultValue={status}
-            //           id="flexCheckDefault"
-            //           onClick={()=>{handleStatus(task._id, task.status)}}
-            //         />
-            //       </div>
-            //       <span className="badge rounded-pill bg-warning text-dark">
-            //         {task.date}
-            //       </span>
-            //       <p className="card-text">{task.body}</p>
-            //       <button
-            //         className="btn btn-primary"
-            //         onClick={() => clickhandle(task._id)}
-            //       >
-            //         Delete Task
-            //       </button>
-            //       <br />
-            //       <br />
-            //       <button
-            //         className="btn btn-primary"
-            //         variant="primary"
-            //         onClick={() =>
-            //           editHandler(task._id, task.title, task.body, task.date)
-            //         }
-            //       >
-            //         Edit Task
-            //       </button>
-            //     </div>
-            //   </div>
-            //   {showModal && (
-            //     <EditTaskModal
-            //       show={show}
-            //       handleClose={handleClose}
-            //       id={id}
-            //       title={title}
-            //       setTitle={setTitle}
-            //       body={body}
-            //       setBody={setBody}
-            //       currentDate={taskdate}
-            //       setTaskDate={setTaskDate}
-            //       setDataSent={props.setDataSent}
-            //       setShowModal={setShowModal}
-            //     />
-            //   )}
-            // </div>
-          
-        
-        // );
       })}
     </div>
+  </>
   );
 };
 

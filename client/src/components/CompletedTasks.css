@@ -1,0 +1,15 @@
+.container{
+    padding: 3rem;
+    position: relative;
+}
+.x-button{
+    background-color: rgb(246, 69, 69);
+    border-radius: 3px;
+    color: #fff;
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: 0;
+    border: none;
+
+}

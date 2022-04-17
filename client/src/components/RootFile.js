@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Form from "./form"
 import Card from "./Card"
 import axios from "axios";
+import './RootFile.css';
 import {
     Routes,
     Route,
@@ -77,8 +78,8 @@ const RootFile = (props) => {
       <div className="expenses">
         {task?.length && <Card tasks={task} setDataSent={setDataSent}></Card>}
       </div>
-      <button type="submit" onClick={()=>{
-        navigate("/completed")}}>Show me something</button>
+      <button className="show-completed-button" type="submit" onClick={()=>{
+        navigate("/completed")}}>Completed Tasks</button>
     </div>
   );
 };

@@ -1,0 +1,8 @@
+.alert-close-button{
+    border: none;
+    position: absolute;
+    right: 18px;
+    border-radius: 50%;
+    color: #fff;
+    background-color: rgba(236, 38, 20, 0.891);
+}
